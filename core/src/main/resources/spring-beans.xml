@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="simpleMovieFinderFactory" class="com.dmslob.spring.core.di.SimpleMovieFinderFactory" />
+
+    <bean id="Event" class="com.dmslob.spring.core.context.Event" scope="prototype">
+        <constructor-arg value="Event title"/>
+    </bean>
+
+    <bean id="messageProvider" class="com.dmslob.spring.core.context.HelloWorldMessageProvider">
+    </bean>
+
+    <bean id="MessageRenderer" class="com.dmslob.spring.core.context.MessageRenderer">
+        <property name="messageProvider" ref="messageProvider"/>
+    </bean>
+
+    <!--<bean id="customerRepository"-->
+          <!--class="CustomerRepository"/>-->
+    <!---->
+    <!--<bean id="inventoryItemRepository"-->
+          <!--class="InventoryItemRepository"/>-->
+    <!---->
+    <!--<bean id="salesOrderRepository"-->
+          <!--class="SalesOrderRepository"/>-->
+
+    <!--<bean id="inventoryService" class="InventoryServiceImpl">-->
+        <!--<constructor-arg ref="inventoryItemRepository"/>-->
+    <!--</bean>-->
+    <!---->
+    <!--<bean id="orderService" class="OrderServiceImpl">-->
+        <!--<constructor-arg name="inventoryService" ref="inventoryService"/>-->
+        <!--<constructor-arg name="customerRepository" ref="customerRepository"/>-->
+        <!--<constructor-arg name="salesOrderRepository" ref="salesOrderRepository"/>-->
+    <!--</bean>-->
+
+    <!--method replacement beans-->
+    <bean id="break" class="com.dmslob.spring.core.methodreplacement.NewBreak" />
+
+    <bean id="car" class="com.dmslob.spring.core.methodreplacement.Car">
+        <replaced-method name="breaks" replacer="break" />
+    </bean>
+
+    <!--method injection beans-->
+    <bean id="helper" class="com.dmslob.spring.core.methodinjection.MyHelper" scope="prototype"/>
+
+    <bean id="abstractLookupBean" class="com.dmslob.spring.core.methodinjection.AbstractLookupDemoBean">
+        <lookup-method name="getMyHelper" bean="helper"/>
+    </bean>
+
+    <bean id="standardLookupBean" class="com.dmslob.spring.core.methodinjection.StandardLookupDemoBean">
+        <property name="myHelper">
+            <ref bean="helper"/>
+        </property>
+    </bean>
+
+    <!--events-->
+    <bean id="publisher" class="com.dmslob.spring.core.events.Publisher"/>
+
+    <bean id="messageEventListener" class="com.dmslob.spring.core.events.MessageEventListener"/>
+
+</beans>
