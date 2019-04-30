@@ -41,6 +41,30 @@ public class SpringContextTest {
     }
 
     @Test
+    public void testIsMessageRendererSingleton() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
+        MessageRenderer messageRendererOne = (MessageRenderer) context.getBean("MessageRenderer");
+        MessageRenderer messageRendererTwo = (MessageRenderer) context.getBean("MessageRenderer");
+
+        boolean isSingleton = (messageRendererTwo == messageRendererOne);
+        System.out.println("isSingleton: " + isSingleton);
+        assertTrue(isSingleton);
+    }
+
+    @Test
+    public void testIsMessageRendererSingletonForAC() {
+        ApplicationContext context1 = new ClassPathXmlApplicationContext("spring-beans.xml");
+        ApplicationContext context2 = new ClassPathXmlApplicationContext("spring-beans.xml");
+
+        MessageRenderer messageRendererOne = (MessageRenderer) context1.getBean("MessageRenderer");
+        MessageRenderer messageRendererTwo = (MessageRenderer) context2.getBean("MessageRenderer");
+
+        boolean isSingleton = (messageRendererOne == messageRendererTwo);
+        System.out.println(isSingleton);
+        assertTrue(isSingleton);
+    }
+
+    @Test
     public void notNullPersonFromXml() {
         ApplicationContext context = new AnnotationConfigApplicationContext(HelloConfig.class);
         Person person = (Person) context.getBean("person");
