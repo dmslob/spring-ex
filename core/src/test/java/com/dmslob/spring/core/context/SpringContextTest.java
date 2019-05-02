@@ -21,6 +21,12 @@ public class SpringContextTest {
     @Autowired
     private Walker walker;
 
+    @Autowired
+    MessageRenderer messageRenderer;
+
+    @Autowired
+    MessageRenderer messageRenderer2;
+
     @Test
     public void notNullPerson() {
         assertNotNull(person);
@@ -34,33 +40,13 @@ public class SpringContextTest {
 
     @Test
     public void testMessageRenderer() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
-        MessageRenderer messageRenderer = (MessageRenderer) context.getBean("MessageRenderer");
-
         assertEquals(messageRenderer.message(), "Message");
     }
 
     @Test
     public void testIsMessageRendererSingleton() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
-        MessageRenderer messageRendererOne = (MessageRenderer) context.getBean("MessageRenderer");
-        MessageRenderer messageRendererTwo = (MessageRenderer) context.getBean("MessageRenderer");
-
-        boolean isSingleton = (messageRendererTwo == messageRendererOne);
+        boolean isSingleton = (messageRenderer == messageRenderer2);
         System.out.println("isSingleton: " + isSingleton);
-        assertTrue(isSingleton);
-    }
-
-    @Test
-    public void testIsMessageRendererSingletonForAC() {
-        ApplicationContext context1 = new ClassPathXmlApplicationContext("spring-beans.xml");
-        ApplicationContext context2 = new ClassPathXmlApplicationContext("spring-beans.xml");
-
-        MessageRenderer messageRendererOne = (MessageRenderer) context1.getBean("MessageRenderer");
-        MessageRenderer messageRendererTwo = (MessageRenderer) context2.getBean("MessageRenderer");
-
-        boolean isSingleton = (messageRendererOne == messageRendererTwo);
-        System.out.println(isSingleton);
         assertTrue(isSingleton);
     }
 
@@ -73,7 +59,6 @@ public class SpringContextTest {
 
     @Test
     public void testWalker() {
-        //ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         assertNotNull(walker);
     }
 
@@ -81,6 +66,7 @@ public class SpringContextTest {
     public void createEventXmlContext() {
         ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         Event eventOne = (Event) xmlApplicationContext.getBean("Event");
+
         assertNotNull(eventOne);
     }
 

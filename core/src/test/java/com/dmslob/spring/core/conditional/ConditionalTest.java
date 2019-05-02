@@ -5,14 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {MagicConfig.class})
-@PropertySource("classpath: application.properties")
 public class ConditionalTest {
 
     @Autowired
@@ -23,12 +21,16 @@ public class ConditionalTest {
 
     @Test
     public void notNullBean() {
+        System.out.println("magicBean is " + (magicBean != null));
         assertNotNull(magicBean);
     }
 
     @Test
     public void beanNameEquals() {
-        assertEquals("MagicBean", magicBean.getName());
+        String name = magicBean.getName();
+        System.out.println("name = " + name);
+
+        assertEquals("MagicBean", name);
     }
 
     @Test

@@ -20,16 +20,16 @@ public class AnnotationTest {
     @Autowired
     private InventoryServiceImpl inventoryService;
 
+    @Autowired
+    private OrderService orderService;
+
     @Test
     public void notNullOrderService() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        OrderService orderService = context.getBean(OrderService.class);
         assertNotNull(orderService);
     }
 
     @Test
     public void testAutowired() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         inventoryService.find(5);
     }
 }

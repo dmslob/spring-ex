@@ -23,6 +23,7 @@ public class InventoryServiceImpl implements InventoryService, BeanNameAware {
     }
 
     public void setBeanName(String beanName) {
+        System.out.println("beanName = " + beanName);
         this.beanName = beanName;
     }
 

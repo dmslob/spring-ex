@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.StopWatch;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = HelloConfig.class)
+@ContextConfiguration(classes = MethodInjectionConfig.class)
 public class MethodInjectionTest {
 
     DemoBean abstractBean;

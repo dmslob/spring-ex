@@ -18,7 +18,9 @@ public class MethodReplacementTest {
     public void testNewCar() {
         ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         Car car = (Car) xmlApplicationContext.getBean("car");
+        String breakText = car.breaks();
+        System.out.println("breakText = " + breakText);
 
-        assertEquals("New car break.", car.breaks());
+        assertEquals("New car break.", breakText);
     }
 }

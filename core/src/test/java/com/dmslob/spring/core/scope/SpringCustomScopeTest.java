@@ -22,7 +22,6 @@ public class SpringCustomScopeTest {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         try {
             ctx.register(TenantScopeConfig.class);
-            //ctx.register(TenantScopeConfig.class);
             ctx.refresh();
 
             TenantBean foo = (TenantBean) ctx.getBean("foo", TenantBean.class);
