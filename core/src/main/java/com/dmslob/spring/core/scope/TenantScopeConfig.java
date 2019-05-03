@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 public class TenantScopeConfig {
     @Bean
     public static BeanFactoryPostProcessor beanFactoryPostProcessor() {
+
         return new TenantBeanFactoryPostProcessor();
     }
 

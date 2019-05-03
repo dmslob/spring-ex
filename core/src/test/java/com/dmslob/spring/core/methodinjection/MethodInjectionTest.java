@@ -17,6 +17,7 @@ import org.springframework.util.StopWatch;
 public class MethodInjectionTest {
 
     DemoBean abstractBean;
+
     DemoBean standardBean;
 
     @Before

@@ -7,7 +7,17 @@
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+
+    <!--annotation-config : Annotation config main job is to activate all the annotations that are present in java
+    beans and those are already registered either by defining in your application context file or being registered while
+    component scanning. Important point is they need to be registered.-->
+
+    <!--component-scan : Component scan can do everything that annotation config does , in addition to it it also
+    registers the java classes as spring bean those are annotated with @Component , @Service ,@Repository etc.-->
+
     <context:component-scan base-package="com.dmslob.spring.core"/>
+
+    <context:property-placeholder location="classpath:application.properties" />
 
     <bean id="Event" class="com.dmslob.spring.core.context.Event" scope="prototype">
         <constructor-arg value="Event title"/>

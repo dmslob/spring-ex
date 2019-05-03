@@ -3,8 +3,12 @@ package com.dmslob.spring.core.annotation;
 import static org.junit.Assert.*;
 
 import com.dmslob.spring.core.annotation.config.AppConfig;
+import com.dmslob.spring.core.annotation.data.repository.CustomerRepository;
+import com.dmslob.spring.core.annotation.data.repository.SalesOrderRepository;
+import com.dmslob.spring.core.annotation.service.InventoryService;
 import com.dmslob.spring.core.annotation.service.OrderService;
 import com.dmslob.spring.core.annotation.service.impl.InventoryServiceImpl;
+import com.dmslob.spring.core.annotation.service.impl.OrderServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,18 @@ public class AnnotationTest {
     @Test
     public void notNullOrderService() {
         assertNotNull(orderService);
+    }
+
+    @Test
+    public void orderServiceTest() {
+        OrderServiceImpl service = (OrderServiceImpl) orderService;
+        CustomerRepository customerRepository = service.getCustomerRepository();
+        InventoryService serviceInventoryService = service.getInventoryService();
+        SalesOrderRepository salesOrderRepository = service.getSalesOrderRepository();
+
+        assertNotNull(customerRepository);
+        assertNotNull(serviceInventoryService);
+        assertNotNull(salesOrderRepository);
     }
 
     @Test

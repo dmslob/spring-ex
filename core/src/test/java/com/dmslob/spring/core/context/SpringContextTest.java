@@ -58,6 +58,15 @@ public class SpringContextTest {
     }
 
     @Test
+    public void testGreeting() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(HelloConfig.class);
+        String greeting = (String) context.getBean("greeting");
+        System.out.println(greeting);
+        assertNotNull(greeting);
+        assertEquals("Hello", greeting);
+    }
+
+    @Test
     public void testWalker() {
         assertNotNull(walker);
     }
@@ -75,6 +84,7 @@ public class SpringContextTest {
         ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         Event eventOne = (Event) xmlApplicationContext.getBean("Event");
         Event eventTwo = (Event) xmlApplicationContext.getBean("Event");
+        System.out.println(eventOne == eventTwo);
         assertNotEquals(eventOne, eventTwo);
     }
 }

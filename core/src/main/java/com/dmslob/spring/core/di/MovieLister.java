@@ -11,7 +11,7 @@ public class MovieLister {
         this.movieFinder = movieFinder;
     }
 
-    public Movie[] moviesDirectedBy(String director) {
+    public List<Movie> moviesDirectedBy(String director) {
         List<Movie> movies = movieFinder.findAll();
         for (Iterator it = movies.iterator(); it.hasNext(); ) {
             Movie movie = (Movie) it.next();
@@ -19,6 +19,6 @@ public class MovieLister {
                 it.remove();
             }
         }
-        return (Movie[]) movies.toArray();
+        return movies;
     }
 }

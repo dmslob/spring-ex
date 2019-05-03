@@ -12,8 +12,17 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+// The typical use case for BeanNameAware could be acquiring the bean name for logging or wiring purposes.
+// For the BeanFactoryAware it could be the ability to use a spring bean from legacy code.
+// In most cases, we should avoid using any of the Aware interfaces, unless we need them.
+// Implementing these interfaces will couple the code to the Spring framework.
+
 @Component
 public class Walker implements InitializingBean, BeanNameAware, BeanFactoryAware, ApplicationContextAware {
+
+    public Walker() {
+        System.out.println("constructor");
+    }
 
     @PostConstruct
     public void init() {

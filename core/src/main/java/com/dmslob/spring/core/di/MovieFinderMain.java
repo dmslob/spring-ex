@@ -1,17 +1,22 @@
 package com.dmslob.spring.core.di;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.List;
 
 public class MovieFinderMain {
 
     public static void main(String[] args) {
 
-        MovieFinderFactory finderFactory = new SimpleMovieFinderFactory();
+        String contextPath = "C:\\Users\\Dmytro_Slobodenyuk\\Desktop\\spring-ex\\core\\src\\main\\resources\\context.ini";
+
+        MovieFinderFactory finderFactory = new SimpleMovieFinderFactory(contextPath);
+        ((SimpleMovieFinderFactory) finderFactory).getObject();
+
         MovieFinder movieFinder = finderFactory.getInstance("colon");
 
         MovieLister movieLister = new MovieLister(movieFinder);
-        Movie[] movies = movieLister.moviesDirectedBy("Uncle Bob");
+        List<Movie> movies = movieLister.moviesDirectedBy("Uncle Bob");
 
-        System.out.println(Arrays.toString(movies));
+        //System.out.println(movies.toString());
     }
 }

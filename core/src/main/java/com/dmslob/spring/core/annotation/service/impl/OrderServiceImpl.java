@@ -7,6 +7,7 @@ import com.dmslob.spring.core.annotation.domain.Order;
 import com.dmslob.spring.core.annotation.service.InventoryService;
 import com.dmslob.spring.core.annotation.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -36,5 +37,17 @@ public class OrderServiceImpl implements OrderService {
 
     public Order getOrder(String orderId) {
         return null;
+    }
+
+    public InventoryService getInventoryService() {
+        return inventoryService;
+    }
+
+    public CustomerRepository getCustomerRepository() {
+        return customerRepository;
+    }
+
+    public SalesOrderRepository getSalesOrderRepository() {
+        return salesOrderRepository;
     }
 }
