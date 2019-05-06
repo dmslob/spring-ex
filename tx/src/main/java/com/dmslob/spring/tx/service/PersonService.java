@@ -7,11 +7,13 @@ import com.dmslob.spring.tx.entity.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Service
 public class PersonService implements ApplicationContextAware {
@@ -21,6 +23,9 @@ public class PersonService implements ApplicationContextAware {
     private ApplicationContext applicationContext;
     private EntityManager entityManager;
 
+    @Autowired
+    private AnotherPersonService anotherPersonService;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -29,44 +34,31 @@ public class PersonService implements ApplicationContextAware {
 
     public void callTransactionalMethodsWithoutTrasaction() {
         LOGGER.info("================ callTransactionalMethodsWithoutTrasaction() =====================");
-        findWithRequired();
-        required();
-        requiresNew();
-        nested();
-        never();
-        supports();
-        notSupported();
-        mandatory();
+        LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+        LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
 
-        try {
-            Person person1 = new Person();
-            person1.setFirstName("Person1");
-            person1.setLastName("Person1");
-            person1.setEmail("email1");
-            entityManager.persist(person1);
-        } catch (Exception e) {
-            LOGGER.error("Error in callTransactionalMethodsWithoutTrasaction() : {}", e.getClass());
-            LOGGER.error("Error message : {}", e.getMessage());
-        }
+        anotherPersonService.findWithRequired();
+        //findWithRequired();
     }
 
     @Transactional
     public void callTransactionalMethodsWithTrasaction() {
         LOGGER.info("================ callTransactionalMethodsWithTrasaction() ========================");
-        try {
-            Person person1 = new Person();
-            person1.setFirstName("Person1");
-            person1.setLastName("Person1");
-            person1.setEmail("email1");
-            entityManager.persist(person1);
-            throw new TransactionRequiredException("did not persist");
-        } catch (Exception e) {
-            LOGGER.error("Error in callTransactionalMethodsWithTrasaction() : {}", e.getClass());
-            LOGGER.error("Error message : {}", e.getMessage());
-        }
+        LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+        LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
 
-        required();
-//        requiresNew();
+        Person person1 = new Person();
+        person1.setFirstName("Person1");
+        person1.setLastName("Person1");
+        person1.setEmail("email1");
+        entityManager.persist(person1);
+
+        anotherPersonService.findWithRequired();
+//        if (true) {
+//            throw new TransactionRequiredException("did not persist");
+//        }
+        //required();
+        //requiresNew();
 //        nested();
 //        supports();
 //        notSupported();
@@ -78,13 +70,16 @@ public class PersonService implements ApplicationContextAware {
     @Transactional(propagation = Propagation.REQUIRED)
     public void findWithRequired() {
         entityManager.find(Person.class, new Long(1));
-        LOGGER.info("required, Thread = {}", Thread.currentThread().getName());
+
+        LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+        LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void required() {
         try {
-            LOGGER.info("required, Thread = {}", Thread.currentThread().getName());
+            LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+            LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
             Person person3 = new Person();
             person3.setFirstName("Person3");
             person3.setLastName("Person3");
@@ -100,7 +95,10 @@ public class PersonService implements ApplicationContextAware {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void requiresNew() {
         try {
-            LOGGER.info("requiresNew, Thread = {}", Thread.currentThread().getName());
+            LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+            LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
+            LOGGER.info("Thread=" + Thread.currentThread().getName());
+
             Person person2 = new Person();
             person2.setFirstName("Person2");
             person2.setLastName("Person2");
@@ -116,7 +114,8 @@ public class PersonService implements ApplicationContextAware {
     @Transactional(propagation = Propagation.MANDATORY)
     public void mandatory() {
         try {
-            LOGGER.info("mandatory, Thread = {}", Thread.currentThread().getName());
+            LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+            LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
             Person person4 = new Person();
             person4.setFirstName("Person4");
             person4.setLastName("Person4");
@@ -132,7 +131,8 @@ public class PersonService implements ApplicationContextAware {
     @Transactional(propagation = Propagation.NESTED)
     public void nested() {
         try {
-            LOGGER.info("nested, Thread = {}", Thread.currentThread().getName());
+            LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+            LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
             Person person5 = new Person();
             person5.setFirstName("Person5");
             person5.setLastName("Person5");
@@ -147,20 +147,23 @@ public class PersonService implements ApplicationContextAware {
 
     @Transactional(propagation = Propagation.NEVER)
     public void never() {
-        LOGGER.info("never, Thread = {}", Thread.currentThread().getName());
+        LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+        LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
         LOGGER.info("This is from never()");
     }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void notSupported() {
-        LOGGER.info("notSupported, Thread = {}", Thread.currentThread().getName());
+        LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+        LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
         LOGGER.info("This is from notSupported()");
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public void supports() {
         try {
-            LOGGER.info("supports, Thread = {}", Thread.currentThread().getName());
+            LOGGER.info("isActive=" + TransactionSynchronizationManager.isActualTransactionActive());
+            LOGGER.info("Name=" + TransactionSynchronizationManager.getCurrentTransactionName());
             Person person7 = new Person();
             person7.setFirstName("Person8");
             person7.setLastName("Person8");

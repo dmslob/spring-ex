@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableJpaRepositories
-@EnableTransactionManagement
 @SpringBootApplication
 public class Application {
 
@@ -17,7 +16,7 @@ public class Application {
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
 
         PersonService bean = context.getBean(PersonService.class);
-        //bean.callTransactionalMethodsWithoutTrasaction();
         bean.callTransactionalMethodsWithTrasaction();
+        //bean.callTransactionalMethodsWithoutTrasaction();
     }
 }
