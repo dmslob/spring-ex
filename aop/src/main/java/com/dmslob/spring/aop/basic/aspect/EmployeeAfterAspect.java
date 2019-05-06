@@ -14,7 +14,7 @@ public class EmployeeAfterAspect {
         System.out.println("Running After Advice. String argument passed=" + name);
     }
 
-    @AfterThrowing("within(Employee)")
+    @AfterThrowing("within(employee)")
     public void logExceptions(JoinPoint joinPoint) {
         System.out.println("Exception thrown in Employee Method=" + joinPoint.toString());
     }
