@@ -17,6 +17,7 @@ public class LoggingAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Pointcut("@annotation(Loggable)")
+    //@Pointcut("execution(* com.dmslob.spring.aop.controller.CustomerWebService.getAll())")
     public void executeLogging() {
     }
 
@@ -51,6 +52,12 @@ public class LoggingAspect {
             message.append(" | returning ").append(returnValue.toString());
         }
         LOGGER.info(message.toString());
+    }
+
+    @AfterThrowing(pointcut = "executeLogging()", throwing = "ex")
+    public void afterError(JoinPoint joinPoint, NullPointerException ex) {
+        // Perform some actions
+        LOGGER.info("Server error: " + ex.getMessage());
     }
 
     @Around("executeLogging()")

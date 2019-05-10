@@ -25,6 +25,9 @@ public class CustomerService {
 
     @Loggable
     public Customer findOne(String id) {
+        if (null == id) {
+            throw new NullPointerException("Customer is not found");
+        }
         return this.customerRepository.findOne(id);
     }
 }

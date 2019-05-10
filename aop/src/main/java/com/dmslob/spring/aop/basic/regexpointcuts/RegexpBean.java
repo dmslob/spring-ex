@@ -1,8 +1,5 @@
 package com.dmslob.spring.aop.basic.regexpointcuts;
 
-/**
- * Created by Dmytro_Slobodenyuk on 8/10/2018.
- */
 public class RegexpBean {
 
     public void foo1() {

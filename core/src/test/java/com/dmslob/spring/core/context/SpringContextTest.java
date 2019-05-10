@@ -2,6 +2,8 @@ package com.dmslob.spring.core.context;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,11 @@ public class SpringContextTest {
     @Test
     public void notNullPerson() {
         assertNotNull(person);
+    }
+
+    @BeforeClass
+    public static void setUp() {
+        System.out.println("setUp()");
     }
 
     @Test

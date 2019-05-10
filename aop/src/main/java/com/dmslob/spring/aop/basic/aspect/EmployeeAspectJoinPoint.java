@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Aspect
 public class EmployeeAspectJoinPoint {
 
-    @Before("execution(public void com.dmslob.spring.training.aop.basic.model..set*(*))")
+    @Before("execution(public void com.dmslob.spring.training.aop.basic.entity..set*(*))")
     public void loggingAdvice(JoinPoint joinPoint) {
         System.out.println("Before running loggingAdvice on method=" + joinPoint.toString());
 

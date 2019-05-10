@@ -12,13 +12,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = DIConfig.class)
+//or @ContextConfiguration(locations = {"classpath:spring-beans.xml"})
 public class MovieFinderTest {
 
     private ApplicationContext context;
 
     @Before
     public void init() {
-         context = new ClassPathXmlApplicationContext("spring-beans.xml");
+        System.out.println("1");
+        context = new ClassPathXmlApplicationContext("spring-beans.xml");
     }
 
     @Test
