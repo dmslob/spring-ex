@@ -1,9 +1,6 @@
 package com.dmslob.spring.core.annotation;
 
 import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 
 import com.dmslob.spring.core.annotation.config.AppConfig;
 import com.dmslob.spring.core.annotation.data.repository.CustomerRepository;
