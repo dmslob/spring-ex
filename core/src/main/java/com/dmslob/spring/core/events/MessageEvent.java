@@ -4,14 +4,14 @@ import org.springframework.context.ApplicationEvent;
 
 public class MessageEvent extends ApplicationEvent {
 
-    private String msg;
+    private String message;
 
-    public MessageEvent(Object source, String msg) {
+    public MessageEvent(Object source, String message) {
         super(source);
-        this.msg = msg;
+        this.message = message;
     }
 
     public String getMessage() {
-        return msg;
+        return message;
     }
 }

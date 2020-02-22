@@ -2,9 +2,7 @@ package com.dmslob.spring.core.methodinjection;
 
 import static org.junit.Assert.*;
 
-import com.dmslob.spring.core.context.HelloConfig;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;

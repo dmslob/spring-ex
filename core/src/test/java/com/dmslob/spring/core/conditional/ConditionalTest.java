@@ -2,12 +2,9 @@ package com.dmslob.spring.core.conditional;
 
 import static org.junit.Assert.*;
 
-import com.dmslob.spring.core.context.HelloConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -23,30 +20,13 @@ public class ConditionalTest {
     private Environment environment;
 
     @Test
-    public void notNullBean() {
-        System.out.println("magicBean is " + (magicBean != null));
+    public void testNotNull() {
         assertNotNull(magicBean);
     }
 
-//    @Test
-//    public void testIsBean() {
-//        ApplicationContext context = new AnnotationConfigApplicationContext(MagicConfig.class);
-//        MagicBean magicBean = (MagicBean) context.getBean("magicBean");
-//
-//        assertNull(magicBean);
-//    }
-
     @Test
-    public void beanNameEquals() {
+    public void testNameEquality() {
         String name = magicBean.getName();
-        System.out.println("name = " + name);
-
         assertEquals("MagicBean", name);
-    }
-
-    @Test
-    public void checkProperty() {
-        String prop = environment.getProperty("greeting.preamble");
-        System.out.println(prop);
     }
 }

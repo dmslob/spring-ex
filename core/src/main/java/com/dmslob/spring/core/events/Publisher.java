@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class Publisher implements ApplicationContextAware {
 
-    private ApplicationContext ctx;
+    private ApplicationContext applicationContext;
 
     public void setApplicationContext(ApplicationContext applicationContext)
             throws BeansException {
-        this.ctx = applicationContext;
+        this.applicationContext = applicationContext;
     }
 
     public void publish(String message) {
-        ctx.publishEvent(new MessageEvent(this, message));
+        applicationContext.publishEvent(new MessageEvent(this, message));
     }
 }

@@ -2,10 +2,10 @@ package com.dmslob.spring.core.context;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = HelloConfig.class)
+@ContextConfiguration(classes = ContextConfig.class)
 public class SpringContextTest {
 
     @Autowired
@@ -29,57 +29,52 @@ public class SpringContextTest {
     @Autowired
     MessageRenderer messageRenderer2;
 
-    @Test
-    public void notNullPerson() {
-        assertNotNull(person);
-    }
-
     @BeforeClass
     public static void setUp() {
         System.out.println("setUp()");
     }
 
     @Test
-    public void notNullNameOfPerson() {
-        System.out.println(person.getName());
+    public void testNotNullPerson() {
+        assertNotNull(person);
+    }
+
+    @Test
+    public void testNotNullNameOfPerson() {
         assertNotNull(person.getName());
     }
 
     @Test
-    public void testMessageRenderer() {
+    public void testMessage() {
         assertEquals(messageRenderer.message(), "Message");
     }
 
     @Test
     public void testIsMessageRendererSingleton() {
         boolean isSingleton = (messageRenderer == messageRenderer2);
-        System.out.println("isSingleton: " + isSingleton);
         assertTrue(isSingleton);
     }
 
     @Test
-    public void notNullPersonFromXml() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(HelloConfig.class);
+    public void testNotNullPersonFromXml() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(ContextConfig.class);
         Person person = (Person) context.getBean("person");
         assertNotNull(person);
     }
 
-    @Test
-    public void testGreeting() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(HelloConfig.class);
-        String greeting = (String) context.getBean("greeting");
-        System.out.println(greeting);
-        assertNotNull(greeting);
-        assertEquals("Hello", greeting);
+    @Test(expected = NoSuchBeanDefinitionException.class)
+    public void testNoSuchBeanDefinitionException() {
+        ApplicationContext context = new AnnotationConfigApplicationContext(ContextConfig.class);
+        context.getBean("greetingService");
     }
 
     @Test
-    public void testWalker() {
+    public void testNotNullWalker() {
         assertNotNull(walker);
     }
 
     @Test
-    public void createEventXmlContext() {
+    public void testXmlContext() {
         ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         Event eventOne = (Event) xmlApplicationContext.getBean("Event");
 
@@ -87,11 +82,11 @@ public class SpringContextTest {
     }
 
     @Test
-    public void eventScopeTest() {
+    public void testBeanWithPrototypeScope() {
         ApplicationContext xmlApplicationContext = new ClassPathXmlApplicationContext("spring-beans.xml");
         Event eventOne = (Event) xmlApplicationContext.getBean("Event");
         Event eventTwo = (Event) xmlApplicationContext.getBean("Event");
-        System.out.println(eventOne == eventTwo);
+
         assertNotEquals(eventOne, eventTwo);
     }
 }

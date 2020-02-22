@@ -21,8 +21,6 @@ public class MessageRenderer {
     }
 
     public String message() {
-        String message = this.messageProvider.getMessage();
-        System.out.println(message);
-        return message;
+        return this.messageProvider.getMessage();
     }
 }
