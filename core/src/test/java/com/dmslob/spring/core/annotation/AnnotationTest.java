@@ -26,24 +26,28 @@ public class AnnotationTest {
     private OrderService orderService;
 
     @Test
-    public void notNullOrderService() {
+    public void testNotNullOrderService() {
         assertNotNull(orderService);
     }
 
     @Test
-    public void orderServiceTest() {
+    public void testNotNullCustomerRepository() {
         OrderServiceImpl service = (OrderServiceImpl) orderService;
         CustomerRepository customerRepository = service.getCustomerRepository();
-        InventoryService serviceInventoryService = service.getInventoryService();
-        SalesOrderRepository salesOrderRepository = service.getSalesOrderRepository();
-
         assertNotNull(customerRepository);
-        assertNotNull(serviceInventoryService);
-        assertNotNull(salesOrderRepository);
     }
 
     @Test
-    public void testAutowired() {
-        inventoryService.find(5);
+    public void testNotNullInventoryService() {
+        OrderServiceImpl service = (OrderServiceImpl) orderService;
+        InventoryService inventoryService = service.getInventoryService();
+        assertNotNull(inventoryService);
+    }
+
+    @Test
+    public void testNotNullSalesOrderRepository() {
+        OrderServiceImpl service = (OrderServiceImpl) orderService;
+        SalesOrderRepository salesOrderRepository = service.getSalesOrderRepository();
+        assertNotNull(salesOrderRepository);
     }
 }

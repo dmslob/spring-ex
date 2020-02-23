@@ -24,7 +24,6 @@ public class OrderServiceImpl implements OrderService {
         this.inventoryService = inventoryService;
         this.customerRepository = customerRepository;
         this.salesOrderRepository = salesOrderRepository;
-        System.out.println("OrderServiceImpl");
     }
 
     public Order createOrder(Customer customer, Map<String, Long> items) {

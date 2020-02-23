@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class MessageEventListener implements ApplicationListener<MessageEvent> {
 
     public void onApplicationEvent(MessageEvent event) {
-        MessageEvent messageEvent = (MessageEvent) event;
-        System.out.println("Received: " + messageEvent.getMessage());
+        System.out.println("Received: " + event.getMessage());
     }
 }
