@@ -27,16 +27,4 @@
     <bean id="car" class="com.dmslob.spring.core.methodreplacement.Car">
         <replaced-method name="breaks" replacer="newBreak" />
     </bean>
-
-    <!--method injection beans-->
-    <bean id="abstractLookupBean" class="com.dmslob.spring.core.methodinjection.AbstractLookupDemoBean">
-        <lookup-method name="getMyHelper" bean="myHelper"/>
-    </bean>
-
-    <bean id="standardLookupBean" class="com.dmslob.spring.core.methodinjection.StandardLookupDemoBean">
-        <property name="myHelper">
-            <ref bean="myHelper"/>
-        </property>
-    </bean>
-
 </beans>
